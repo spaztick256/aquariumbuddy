@@ -52,10 +52,10 @@ myApp
       var day = $scope.testDate.getDate();
       var month = $scope.testDate.getMonth() + 1;
       var whereStatement = '';
-      var nodeDate = '(date:Date {year:' + year + ', month:' + month + ', day: ' + day + '})';
+      var nodeDate = 'merge (date:Date {year:' + year + ', month:' + month + ', day: ' + day + '})';
       var nodeTank = null;
       //Find Tank node
-      if( typeof($scope.formdata.selectedAquarium.tankid) === "undefined" ){
+      if( typeof($scope.formdata.selectedAquarium.tankid) === 'undefined' ){
         alert( 'You need to select a tank before saving tests');
         $scope.query = '';
         return;
@@ -65,11 +65,41 @@ myApp
         whereStatement += ' AND ';
       }
       whereStatement += 'id(tank) = ' + $scope.formdata.selectedAquarium.tankid;
-      $scope.query  = 'match ' + nodeDate;
-      $scope.query += ', ' + nodeTank;
-      $scope.query += ' where ' + whereStatement;
-      $scope.query += ' return date';
+      //Lets process the test results list
+      var tests = '';
+      var results = '';
+      angular.forEach($scope.testResults, function(test, index){
+        var dummy = 6;
+        var teststring = '(t' + index + ':TestType {type:"' + test.type.type + '"})';
+        var resultstring  = 'merge (date)<-[:performedOn]-(r' + index + ':Test {result:' + test.value + '})-[:ofType]->(t' + index + ') ';
+            resultstring += 'merge (r' + index + ')-[:source]->(tank) ';
+        if( index > 0 ){
+          tests += ', ';
+        }
+        results += resultstring;
+        tests += teststring;
+      });
 
+      //Create the query
+      var query  = 'match ' + nodeTank;
+          query += ', ' + tests;
+          query += ' where ' + whereStatement;
+          query += ' ' + nodeDate;
+          query += ' ' + results;
+//      $scope.query += ' return date';
+
+      //Save the results to the db
+      neoFactory.commit(query)
+        .success( function(data){
+          alert( "Saved Successfully");
+          //Get the latest data
+          getHistoricTestResults();
+          $scope.resetTestResults();
+        })
+        .error(function(error){
+          alert( "Error saving.");
+          console.log(error);
+        });
     };
 
     $scope.resetTestResults = function(){
@@ -77,8 +107,8 @@ myApp
     };
 
     $scope.aquariumLocation = function(tankid){
-      return $scope.aquariumInfo.find(function(d){ return d.tankid == tankid;}).location;
-    }
+      return $scope.aquariumInfo.find(function(d){ return d.tankid === tankid;}).location;
+    };
 
     getTestTypes();
     getAquariumsInfo();
