@@ -1,0 +1,20 @@
+<!-- Beginning Aquarium Info Panel -->
+<div class="panel panel-info">
+  <div class="panel-heading text-center clearfix">
+    <h3 class="panel-title">Aquarium Details</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <label>Aquarium Location :
+          <select ng-model="formdata.selectedAquarium" ng-options="aquarium.location for aquarium in aquariumInfo">
+            <option value="">All</option>
+          </select>
+        </label>
+      </li>
+      <li class="list-group-item"><label>Size : {{formdata.selectedAquarium.size}}</label></li>
+      <li class="list-group-item"><label>Type : {{formdata.selectedAquarium.type}}</label></li>
+    </ul>
+  </div>
+</div>
+<!-- End of Aquarium Info Panel -->

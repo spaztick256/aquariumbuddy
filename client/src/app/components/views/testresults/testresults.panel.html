@@ -1,0 +1,35 @@
+<!-- Beginning of Test Results Panel -->
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <div class="btn-group" style="float:right;margin-top: -7.5px;">
+      <button class="btn btn-default btn-sm glyphicon glyphicon-plus" ng-click="newTestResult();"></button>
+    </div>
+    <h4 class="panel-title text-center">Test Results</h4>
+  </div>
+  <div class="panel-body">
+    <div class="text-center">
+      <label>Date of Test :
+        <input type="date" name="date_of_test" ng-model="testDate"/>
+      </label>
+    </div>
+    <ul class="testresults-group list-group" ng-repeat="testResult in testResults">
+      <li class="testresult-item list-group-item">
+        <label>Water Test Type :
+          <select ng-model="testResults[$index].type" ng-options="testType.type for testType in testTypes">
+          </select>
+        </label>
+        <label>Test Result :
+          <input type="number" class="testresult-value" ng-model="testResults[$index].value"/>
+        </label>
+        {{testResults[$index].type.units}}
+        <a class="pull-right" ng-click="removeTest($index)"><i class="glyphicon glyphicon-remove-circle"/></a>
+      </li>
+    </ul>
+    <div class="text-center">
+      <button class="btn btn-primary" ng-click="saveTestResults()">Save Tests</button>
+      <button class="btn btn-primary" ng-click="resetTestResults()">Reset Tests</button>
+    </div>
+  </div>
+  {{query}}
+</div>
+<!-- End of Test Results Panel -->

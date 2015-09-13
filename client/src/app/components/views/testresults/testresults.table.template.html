@@ -1,0 +1,16 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <td class="text-center">Date of Test</td>
+    <td class="text-center">Test Type</td>
+    <td class="text-center">Test Result</td>
+    <td class="text-center">Tank</td>
+  </thead>
+  <!-- | filter:'Ammonia' -->
+   <!-- | filter:{type:'Nitrite'} -->
+  <tr ng-repeat="testResultHist in testResultsHistory | filter:{tankid : formdata.selectedAquarium.tankid}">
+    <td class="text-center">{{testResultHist.date}}</td>
+    <td class="text-center">{{testResultHist.type}}</td>
+    <td class="text-center">{{testResultHist.resultValue}} {{testResultHist.units}}</td>
+    <td class="text-center">{{aquariumLocation(testResultHist.tankid)}}</td>
+  </tr>
+</table>

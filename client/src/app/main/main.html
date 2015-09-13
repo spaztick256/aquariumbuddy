@@ -1,0 +1,36 @@
+<div class="container">
+
+  <div ng-include="'app/components/navbar/navbar.html'"></div>
+  <div class="row">
+    <div class="col-sm-5">
+      <aquarium-panel/>
+    </div>
+    <div class="col-sm-7">
+      <testresults-panel/>
+    </div>
+  </div> <!-- End of Row -->
+  <div class="row">
+    <div class="col-sm-12">
+      <!-- Data Panel Start -->
+      <div class="panel panel-info">
+        <div class="panel-heading text-center clearfix">
+          <h3 class="panel-title">Data Viewer</h3>
+        </div>
+        <div class="panel-body">
+            <!--ref : http://angular-ui.github.io/bootstrap/ -->
+          <tabset>
+            <tab heading="Graphs">
+              Graphs will be here
+            </tab>
+            <tab heading="Raw Data">
+              <testresults-table/>
+            </tab>
+          </tabset>
+
+        </div>
+      </div>
+      <!-- Data Panel End -->
+    </div>
+  </div>
+
+</div>
