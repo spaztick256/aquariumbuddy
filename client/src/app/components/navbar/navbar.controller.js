@@ -1,7 +1,7 @@
 'use strict';
 
 //angular.module('aqbClient')
-myApp
+angular.module('aqbClient')
   .controller('NavbarCtrl', ['$scope', function ($scope) {
     $scope.date = new Date();
   }]);

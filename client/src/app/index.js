@@ -1,8 +1,11 @@
 'use strict';
 
-myApp = angular.module('aqbClient', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.bootstrap']);
+angular.module('aqbClient', ['ngAnimate', 'ngCookies',
+                             'ngTouch', 'ngSanitize',
+                             'ngResource', 'ui.router',
+                             'ui.bootstrap']);
 
- myApp
+angular.module('aqbClient')
    .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {

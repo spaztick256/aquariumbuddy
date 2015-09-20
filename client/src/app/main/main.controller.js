@@ -1,7 +1,7 @@
 'use strict';
 
 //angular.module('aqbClient')
-myApp
+angular.module('aqbClient')
   .controller('MainCtrl', ['$scope', 'neoFactory', function ($scope, neoFactory) {
     $scope.testResults = [
       {}
@@ -91,13 +91,13 @@ myApp
       //Save the results to the db
       neoFactory.commit(query)
         .success( function(data){
-          alert( "Saved Successfully");
+          alert( 'Saved Successfully');
           //Get the latest data
           getHistoricTestResults();
           $scope.resetTestResults();
         })
         .error(function(error){
-          alert( "Error saving.");
+          alert( 'Error saving.');
           console.log(error);
         });
     };

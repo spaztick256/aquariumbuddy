@@ -5,7 +5,7 @@
 
 
 // angular.module('aqbClient')
-myApp
+angular.module('aqbClient')
   .factory( 'neoFactory', ['$http', function($http){
     var neoFactory = {};
     var urlBase = 'http://localhost:7474/db/data/';
@@ -18,16 +18,6 @@ myApp
 
     neoFactory.getTestTypes = function(){
       var statement = 'match (n:TestType) return n.type as type, n.units as units';
-      /*
-      var queryStatments = {
-        statements : [
-          {
-            statement : 'match (n:TestType) return n.type as type, n.units as units'
-          }
-        ]
-      };
-      return $http.post( urlBase + urlCommit, queryStatments );
-      */
       return neoFactory.commit( statement );
     };
 
@@ -35,18 +25,6 @@ myApp
       var statement = 'match (loc:Location)<-[:locatedAt]-(tank:Tank)-[:ofType]->(tanktype:TankType) ' +
                       'return tank.size as size, tanktype.type as type,' +
                       ' loc.location as location, id(tank) as tankid';
-      /*
-        var queryStatments = {
-          statements : [
-            {
-              statement : 'match (loc:Location)<-[:locatedAt]-(tank:Tank)-[:ofType]->(tanktype:TankType) ' +
-                          'return tank.size as size, tanktype.type as type,' +
-                          ' loc.location as location, id(tank) as tankid'
-            }
-          ]
-        };
-        return $http.post( urlBase + urlCommit, queryStatments );
-        */
         return neoFactory.commit( statement );
     };
 
