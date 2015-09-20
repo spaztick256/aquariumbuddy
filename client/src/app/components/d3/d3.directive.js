@@ -5,7 +5,9 @@ angular.module('aqbClient')
     function($window, $timeout, d3Service){
       return {
         restrict : 'EA',
-        scope : {},
+        scope : {
+          data : '='  //bi-directional data-binding
+        },
         //directive code
         link : function( scope, ele, attrs ){
           d3Service.d3().then(function(d3){
@@ -24,12 +26,12 @@ angular.module('aqbClient')
               };
 
               //hard-code data
-              scope.data = [
-                {name: 'Greg', score: 98},
-                {name: 'Ari', score: 96},
-                {name: 'Q', score: 75},
-                {name: 'Loser', score: 48}
-              ];
+              // scope.data = [
+              //   {name: 'Greg', score: 98},
+              //   {name: 'Ari', score: 96},
+              //   {name: 'Q', score: 75},
+              //   {name: 'Loser', score: 48}
+              // ];
 
               //watch for resize event
               scope.$watch(function(){
@@ -37,6 +39,11 @@ angular.module('aqbClient')
               }, function() {
                 scope.render(scope.data);
               });
+
+              //watch for data changes and re-render
+              scope.$watch('data', function( newVals, oldVals){
+                  return scope.render(newVals);
+              }, true);
 
               scope.render = function(data){
                 //remove all previous items before rendering
