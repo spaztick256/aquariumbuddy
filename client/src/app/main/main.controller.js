@@ -2,7 +2,7 @@
 
 //angular.module('aqbClient')
 angular.module('aqbClient')
-  .controller('MainCtrl', ['$scope', 'neoFactory', function ($scope, neoFactory) {
+  .controller('MainCtrl', ['$scope', 'neoFactory', 'd3Service', function ($scope, neoFactory, d3Service) {
     $scope.testResults = [
       {}
     ];
