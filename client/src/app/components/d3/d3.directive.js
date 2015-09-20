@@ -25,14 +25,6 @@ angular.module('aqbClient')
                 scope.$apply();
               };
 
-              //hard-code data
-              // scope.data = [
-              //   {name: 'Greg', score: 98},
-              //   {name: 'Ari', score: 96},
-              //   {name: 'Q', score: 75},
-              //   {name: 'Loser', score: 48}
-              // ];
-
               //watch for resize event
               scope.$watch(function(){
                 return angular.element($window)[0].innerWidth;
@@ -61,7 +53,7 @@ angular.module('aqbClient')
                     //our xScale
                     xScale = d3.scale.linear()
                       .domain([0, d3.max(data, function(d){
-                        return d.score;
+                        return d.value;
                       })])
                       .range([0,width]);
 
@@ -79,13 +71,24 @@ angular.module('aqbClient')
                         return i * ( barHeight + barPadding );
                       })
                       .attr('fill', function(d){
-                        return color(d.score);
+                        return color(d.value);
                       })
                       .transition()
                         .duration(1000)
                         .attr('width', function(d){
-                          return xScale(d.score);
+                          return xScale(d.value);
                         });
+                svg.selectAll('text')
+                   .data(data).enter()
+                      .append('text')
+                      .attr('fill', '#fff')
+                      .attr('y', function(d,i){
+                        return i * (barHeight + barPadding) + 15;
+                      })
+                      .attr('x', 15)
+                      .text(function(d){
+                        return d.label + " ( " + d.value + ")";
+                      });
               };
 
           });

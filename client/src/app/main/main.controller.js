@@ -11,12 +11,9 @@ angular.module('aqbClient')
     };
     $scope.testDate = new Date();
 
-    $scope.data = [
-      {name: 'Greg', score: 98},
-      {name: 'Ari', score: 96},
-      {name: 'Q', score: 75},
-      {name: 'Loser', score: 48}
-    ];
+    $scope.testResultsHistory = [];
+
+    $scope.phData = [];
 
     function getTestTypes(){
       neoFactory.getTestTypes()
@@ -40,6 +37,17 @@ angular.module('aqbClient')
       neoFactory.getTestResults()
         .success( function(data){
             $scope.testResultsHistory = neoFactory.parseData(data);
+            $scope.phData.length = 0;
+            angular.forEach($scope.testResultsHistory, function( test, index){
+              if( test.type.toLowerCase() === 'ph'){
+                var d = {
+                  label : test.date,
+                  value : test.resultValue
+                };
+                $scope.phData.push(d);
+              }
+              var dummy = 4;
+            });
         })
         .error( function(error){
         });
@@ -113,7 +121,11 @@ angular.module('aqbClient')
     };
 
     $scope.aquariumLocation = function(tankid){
-      return $scope.aquariumInfo.find(function(d){ return d.tankid === tankid;}).location;
+      var ret = [];
+      if( $scope.aquariumInfo ){
+        ret = $scope.aquariumInfo.find(function(d){ return d.tankid === tankid;}).location;    
+      }
+      return ret;
     };
 
     getTestTypes();
