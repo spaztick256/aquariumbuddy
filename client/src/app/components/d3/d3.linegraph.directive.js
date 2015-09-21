@@ -73,6 +73,8 @@ angular.module('aqbClient')
                     name : t,
                     values : loData.map(function(d){
                       return {date: parseDate(d.date), value: d.resultValue };
+                    }).sort( function(a,b){
+                      return (a.date > b.date)?1:((b.date > a.date)?-1:0);
                     })
                   };
                 });
