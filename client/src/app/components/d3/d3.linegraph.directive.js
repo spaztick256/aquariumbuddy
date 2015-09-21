@@ -13,12 +13,14 @@ angular.module('aqbClient')
         link : function( scope, ele, attrs ){
           d3Service.d3().then(function(d3){
               var margin = {top: 20, right: 30, bottom: 30, left: 30};
+              var windowWidth = 658;
               var windowHeight = 500;
               //d3 is the raw d3 object
               var svg = d3.select(ele[0])
                           .append('svg')
-                          .style('width', '100%')
+                          .style('width', windowWidth )
                           .style('height', windowHeight)
+                          // .style('width', "100%" )
                           .attr('class', 'chart-style');
 
               //Browser onresize event
@@ -43,6 +45,9 @@ angular.module('aqbClient')
               }, false );
 */
               scope.render = function(data, tankid){
+                if( scope.tankid === 0 ){
+                  var dummy = 5;
+                }
                 //remove all previous items before rendering
                 svg.selectAll('*').remove();
 
@@ -73,7 +78,8 @@ angular.module('aqbClient')
                 });
 
                 //setup variables
-                var width = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
+                // var width = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
+                var width = windowWidth - margin.left - margin.right;
                 var height =  windowHeight - margin.top - margin.bottom;
 
 
