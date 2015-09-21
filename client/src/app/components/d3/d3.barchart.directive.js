@@ -18,7 +18,8 @@ angular.module('aqbClient')
               //d3 is the raw d3 object
               var svg = d3.select(ele[0])
                           .append('svg')
-                          .style('width', '100%');
+                          .style('width', '100%')
+                          .attr('class', 'chart-style');
 
               //Browser onresize event
               $window.onresize = function() {
@@ -87,7 +88,7 @@ angular.module('aqbClient')
                       })
                       .attr('x', 15)
                       .text(function(d){
-                        return d.label + " ( " + d.value + ")";
+                        return d.label + ' ( ' + d.value + ' ) ';
                       });
               };
 

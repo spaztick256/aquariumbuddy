@@ -14,6 +14,7 @@ angular.module('aqbClient')
     $scope.testResultsHistory = [];
 
     $scope.phData = [];
+    $scope.ammoData = [];
 
     function getTestTypes(){
       neoFactory.getTestTypes()
@@ -39,12 +40,15 @@ angular.module('aqbClient')
             $scope.testResultsHistory = neoFactory.parseData(data);
             $scope.phData.length = 0;
             angular.forEach($scope.testResultsHistory, function( test, index){
+              var d = {
+                label : test.date,
+                value : test.resultValue
+              };
               if( test.type.toLowerCase() === 'ph'){
-                var d = {
-                  label : test.date,
-                  value : test.resultValue
-                };
                 $scope.phData.push(d);
+              }
+              else if (test.type.toLowerCase() === 'ammonia') {
+                $scope.ammoData.push(d);
               }
               var dummy = 4;
             });
@@ -123,7 +127,7 @@ angular.module('aqbClient')
     $scope.aquariumLocation = function(tankid){
       var ret = [];
       if( $scope.aquariumInfo ){
-        ret = $scope.aquariumInfo.find(function(d){ return d.tankid === tankid;}).location;    
+        ret = $scope.aquariumInfo.find(function(d){ return d.tankid === tankid;}).location;
       }
       return ret;
     };

@@ -20,7 +20,8 @@
             <!--ref : http://angular-ui.github.io/bootstrap/ -->
           <tabset>
             <tab heading="Graphs">
-              <d3-bars bar-height="30" bar-padding="10" data="phData"/>
+          <!--    <d3-bars bar-height="30" bar-padding="10" data="phData"/> -->
+              <d3-lines data="testResultsHistory", tankid="0"/>
             </tab>
             <tab heading="Raw Data">
               <testresults-table/>
