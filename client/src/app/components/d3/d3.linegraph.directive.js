@@ -6,8 +6,9 @@ angular.module('aqbClient')
       return {
         restrict : 'EA',
         scope : {
-          data : '=',  //bi-directional data-binding
-          tankid : '='
+          data : '=',     //bi-directional data-binding
+          testtype : '=',
+          tankid : '=',   //tank filter
         },
         //directive code
         link : function( scope, ele, attrs ){
@@ -32,22 +33,23 @@ angular.module('aqbClient')
               scope.$watch(function(){
                 return angular.element($window)[0].innerWidth;
               }, function() {
-                scope.render(scope.data, scope.tankid );
+                scope.render(scope.data, scope.tankid, scope.testtype );
               });
-/*
+
+              scope.$watch('testtype', function(){
+                scope.render(scope.data, scope.tankid, scope.testtype );
+              }, true );
+
               //watch for data changes and re-render
-              scope.$watch('data', function( newVals, oldVals){
-                  return scope.render(newVals, scope.tankid);
+              scope.$watch('data', function( ){
+                  return scope.render(scope.data, scope.tankid, scope.testtype );
               }, true);
-/*
-              scope.$watch('tankid', function(newVals, oldVals){
-                return scope.render(scope.data, newVals );
-              }, false );
-*/
-              scope.render = function(data, tankid){
-                if( scope.tankid === 0 ){
-                  var dummy = 5;
-                }
+
+              scope.$watch('tankid', function(){
+                return scope.render(scope.data, scope.tankid, scope.testtype );
+              }, true );
+
+              scope.render = function(data, tankid, type ){
                 //remove all previous items before rendering
                 svg.selectAll('*').remove();
 
@@ -55,6 +57,9 @@ angular.module('aqbClient')
                 if( !data && data.length ){ return; }
                 //lets get rid of the data that isn't for the right tankid
                 data = data.filter(function(k){ return k.tankid === tankid; });
+                if( type ){
+                  data = data.filter(function(k){ return k.type === type; });
+                }
                 //date parse function
                 var parseDate = d3.time.format('%Y-%m-%-d').parse;
                 var testTypes = d3.set();

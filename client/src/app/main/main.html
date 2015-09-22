@@ -18,9 +18,15 @@
         </div>
         <div class="panel-body">
             <!--ref : http://angular-ui.github.io/bootstrap/ -->
+
           <tabset>
             <tab ng-repeat="aquarium in aquariumInfo" heading="{{aquarium.location}}">
-              <d3-lines data="testResultsHistory" tankid="aquarium.tankid"/>
+              <label>Test Type :
+                <select ng-model="selectedDataViewerTest" ng-options="testType.type for testType in testTypes">
+                  <option value="">All</option>
+                </select>
+              </label>
+              <d3-lines data="testResultsHistory" tankid="aquarium.tankid" testtype="selectedDataViewerTest.type"/>
             </tab>
             <tab heading="Raw Data">
               <testresults-table/>

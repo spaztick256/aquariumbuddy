@@ -10,7 +10,7 @@ angular.module('aqbClient')
       selectedAquarium : {}
     };
     $scope.testDate = new Date();
-
+    $scope.selectedDataViewerTest = undefined;
     $scope.testResultsHistory = [];
 
     $scope.phData = [];
